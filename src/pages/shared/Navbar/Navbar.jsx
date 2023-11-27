@@ -1,12 +1,31 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
+
+    // console.log(user);
+    const handleLogout = () => {
+        logOut()
+            .then(() => {
+                console.log("LogOut successfull");
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `Good bye, ${user?.displayName}! See ya!!!`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
+    }
 
     const navLink = <>
-        <li><span><NavLink>Home</NavLink></span></li>
-        <li><span><NavLink>Meals</NavLink></span></li>
-        <li><span><NavLink>Upcoming Meals</NavLink></span></li>
+        <li><span><NavLink to="/">Home</NavLink></span></li>
+        <li><span><NavLink to={'/meals'}>Meals</NavLink></span></li>
+        <li><span><NavLink to={"/upcomingMeals"}>Upcoming Meals</NavLink></span></li>
         <li><span><NavLink to={'/login'}>Join Us</NavLink></span></li>
     </>
 
@@ -28,9 +47,32 @@ const Navbar = () => {
                     {navLink}
                 </ul>
             </div>
-            <div className="navbar-end">
-                <a className="btn">Button</a>
-            </div>
+            {
+                user ?
+                    <>
+                        <div className="navbar-end">
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img src={user?.photoURL ? user?.photoURL : "0"} /></div>
+                                <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li><span className="pointer-events-none font-bold">{user?.displayName}</span></li>
+                                    <li><span><NavLink to={"/dashboard"}>Dashboard</NavLink></span></li>
+                                    <li><span><NavLink onClick={handleLogout}>Logout</NavLink></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </>
+                    :
+                    <div className="navbar-end opacity-0 cursor-none">
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img src={user?.photoURL ? user?.photoURL : "0"} /></div>
+                            <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                <li><span className="pointer-events-none font-bold">{user?.displayName}</span></li>
+                                <li><span><NavLink to={"/dashboard"}>Dashboard</NavLink></span></li>
+                                <li><span><NavLink onClick={handleLogout}>Logout</NavLink></span></li>
+                            </ul>
+                        </div>
+                    </div>
+            }
         </div>
     );
 };
