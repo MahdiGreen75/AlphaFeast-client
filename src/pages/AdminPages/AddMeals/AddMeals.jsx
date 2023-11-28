@@ -21,16 +21,20 @@ const AddMeals = () => {
             }
         });
         const imgLink = res1.data.data.display_url;
+        const currentDate = new Date();
         const dataObj = {
             imgLink,
             "adminEmail": data.adminEamil,
             "adminName": data.adminName,
             "mealDescription": data.mealDescription,
+            "mealPrice": data.mealPrice,
             "mealLikes": data.mealLikes,
-            "mealReview": data.mealReview,
+            "mealReview": [data.mealReview],
             "mealTitle": data.mealTitle,
             "mealType": data.mealType,
-            "upcomingOrAddMeals": data.upcomingOrAddMeals
+            "upcomingOrAddMeals": data.upcomingOrAddMeals,
+            "mealRequest": false, // "pending" , "delivered" , 'false'
+            "mealPostTime": currentDate
         }
 
         const res2 = await axios.post(`http://localhost:5000/meals`, dataObj)
@@ -77,7 +81,14 @@ const AddMeals = () => {
                         <span className="label-text">Input the primary likes count for the meal?</span>
                     </label>
                     <input type="number" {...register("mealLikes")} placeholder="Meal Likes Count" className="input input-bordered w-full" />
-                </div>`
+                </div>
+                {/* meal price */}
+                <div className="form-control w-full ">
+                    <label className="label">
+                        <span className="label-text">Input the price of the meal?</span>
+                    </label>
+                    <input type="number" {...register("mealPrice")} placeholder="Meal Price" className="input input-bordered w-full" />
+                </div>
                 {/* upcoming or add to meals */}
                 <div>
                     <label htmlFor="meal-type">Choose where you want show this meal?</label>

@@ -1,5 +1,10 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import Breakfast from './Breakfast';
+import Lunch from './lunch';
+import Dinner from './Dinner';
+import AllMeals from './AllMeals';
+
 
 const MealsByCategory = () => {
     return (
@@ -13,16 +18,16 @@ const MealsByCategory = () => {
                 </TabList>
 
                 <TabPanel>
-                    <h2>Any content 1</h2>
+                    <Breakfast/>
                 </TabPanel>
                 <TabPanel>
-                    <h2>Any content 2</h2>
+                    <Lunch/>
                 </TabPanel>
                 <TabPanel>
-                    <h2>Any content 3</h2>
+                   <Dinner></Dinner>
                 </TabPanel>
                 <TabPanel>
-                    <h2>Any content 4 </h2>
+                    <AllMeals></AllMeals>
                 </TabPanel>
             </Tabs>
         </div>
