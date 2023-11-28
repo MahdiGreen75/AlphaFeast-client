@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useQueryAllMeals from "../../../hooks/AllTheGetRequests/useQueryAllMeals";
 
 const AllMeals = () => {
@@ -21,7 +22,11 @@ const AllMeals = () => {
                                 <span className="text-base font-semibold">Price:</span>
                                 <span className="font-light text-base">${item.mealPrice}</span>
                             </p>
-                            <button className="btn btn-primary">Details</button>
+                            <div>
+                                <Link to={`/meals/${item._id}`} state={{...item}}>
+                                    <button className="btn btn-primary">Details</button>
+                                </Link>
+                            </div>
                         </div>
                     </div>)
             }

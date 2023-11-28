@@ -13,6 +13,7 @@ import AdminProfile from "../pages/AdminPages/AdminProfile/AdminProfile";
 import ServeMeals from "../pages/AdminPages/ServeMeals/ServeMeals";
 import AddMeals from "../pages/AdminPages/AddMeals/AddMeals";
 import AllReviews from "../pages/AdminPages/AllReviews/AllReviews";
+import MealDetails from "../pages/MealDetails/MealDetails";
 
 
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
             {
                 path: '/meals',
                 element: <Meals></Meals>
+            },
+            {
+                path: '/meals/:details',
+                element: <MealDetails></MealDetails>
             },
             {
                 path: "/upcomingMeals",

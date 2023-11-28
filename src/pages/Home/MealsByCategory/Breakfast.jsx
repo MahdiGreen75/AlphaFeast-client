@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import useQueryBreakfast from "../../../hooks/AllTheGetRequests/useQueryBreakfast";
 
 const Breakfast = () => {
     const [breakfast, isPending] = useQueryBreakfast();
 
-    if(isPending) {
+    if (isPending) {
         return <div className="w-full flex justify-center items-center my-10 min-h-screen">
             <span className="loading loading-spinner loading-lg"></span>
         </div>
@@ -21,7 +22,11 @@ const Breakfast = () => {
                                 <span className="text-base font-semibold">Price:</span>
                                 <span className="font-light text-base">${item.mealPrice}</span>
                             </p>
-                            <button className="btn btn-primary">Details</button>
+                            <div>
+                                <Link to={`/meals/${item._id}`} state={{...item}}>
+                                    <button className="btn btn-primary">Details</button>
+                                </Link>
+                            </div>
                         </div>
                     </div>)
             }
