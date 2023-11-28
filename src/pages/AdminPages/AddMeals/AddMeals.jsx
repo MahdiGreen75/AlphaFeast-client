@@ -1,5 +1,9 @@
 import { useForm } from "react-hook-form"
+import axios from "axios";
+import Swal from "sweetalert2";
 
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddMeals = () => {
     const {
         register,
@@ -7,9 +11,40 @@ const AddMeals = () => {
         reset
     } = useForm()
 
-    const onSubmit = (data) => {
-        console.log(data);
-        reset();
+    const onSubmit = async (data) => {
+        // console.log(data);
+        const imageFile = { image: data.mealImg[0] }
+        //upload image to imagebb then get an url
+        const res1 = await axios.post(image_hosting_api, imageFile, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        });
+        const imgLink = res1.data.data.display_url;
+        const dataObj = {
+            imgLink,
+            "adminEmail": data.adminEamil,
+            "adminName": data.adminName,
+            "mealDescription": data.mealDescription,
+            "mealLikes": data.mealLikes,
+            "mealReview": data.mealReview,
+            "mealTitle": data.mealTitle,
+            "mealType": data.mealType,
+            "upcomingOrAddMeals": data.upcomingOrAddMeals
+        }
+
+        const res2 = await axios.post(`http://localhost:5000/meals`, dataObj)
+        // console.log(res2.data);
+        if (res2.data.insertedId) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Your meal is added successfully.",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            reset();
+        }
     }
 
     return (
@@ -46,18 +81,18 @@ const AddMeals = () => {
                 {/* upcoming or add to meals */}
                 <div>
                     <label htmlFor="meal-type">Choose where you want show this meal?</label>
-                    <select id="meal-type" {...register("upcomingOrAddMeals")} className="select select-bordered w-full max-w-xs ml-4">
-                        <option disabled selected>Upcoming meals</option>
-                        <option>Add to meals</option>
+                    <select id="meal-type" defaultValue={"upcomingMeals"} {...register("upcomingOrAddMeals")} className="select select-bordered w-full max-w-xs ml-4">
+                        <option value={"upcomingMeals"}>Upcoming meals</option>
+                        <option value={"addToMeals"}>Add to meals</option>
                     </select>
                 </div>`
                 {/* meal type */}
                 <div>
                     <label htmlFor="meal-type">Choose the meal type?</label>
-                    <select id="meal-type" {...register("mealType")} className="select select-bordered w-full max-w-xs ml-4">
-                        <option disabled selected>Breakfast</option>
-                        <option>Lunch</option>
-                        <option>Dinner</option>
+                    <select id="meal-type" defaultValue={"breakfast"} {...register("mealType")} className="select select-bordered w-full max-w-xs ml-4">
+                        <option value={"breakfast"}>Breakfast</option>
+                        <option value={"lunch"}>Lunch</option>
+                        <option value={"dinner"}>Dinner</option>
                     </select>
                 </div>
                 {/* meal image */}
