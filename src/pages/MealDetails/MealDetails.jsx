@@ -10,11 +10,12 @@ import useQueryDinner from "../../hooks/AllTheGetRequests/useQueryDinner";
 const MealDetails = () => {
     const { user } = useContext(AuthContext);
     const location = useLocation();
-    const {details} = useParams();
+    const { details } = useParams();
     const [allMeals, , refetch1] = useQueryAllMeals();
     const [breakfast, , refetch2] = useQueryBreakfast();
     const [dinner, , refetch3] = useQueryDinner();
     const [lunch, , refetch4] = useQueryLunch();
+    // const [mealRequest, setMealRequest] = useState('Request');
 
     const from = location.state.from;
     let detailsObj;
@@ -35,7 +36,7 @@ const MealDetails = () => {
         detailsObj = lunch;
     }
 
-    const myObj = detailsObj.filter(item=>(item._id === details));
+    const myObj = detailsObj.filter(item => (item._id === details));
 
     let {
         _id,
@@ -56,6 +57,12 @@ const MealDetails = () => {
         const review = e.target.review.value;
         //code goes here.
         const userReview = `${review} ---${user?.displayName}`;
+        const dataObj = {
+            "review": userReview,
+            "mealTitle": mealTitle,
+            "mealImg": imgLink,
+        }
+        // console.log(dataObj)
         axios.patch(`http://localhost:5000/reviews/${_id}`, { review: userReview })
             .then(res => {
                 if (res.data.modifiedCount === 1) {
@@ -64,8 +71,19 @@ const MealDetails = () => {
                     refetch3();
                     refetch4();
                     e.target.reset();
+                    //send the review to the user.
+                    axios.patch(`http://localhost:5000/userReviews/${user?.email}`,
+                        {
+                            dataObj
+                        })
+                        .then((res) => {
+                            console.log('Review stored in the user.', res.data);
+                        })
                 }
             })
+    }
+
+    const hendleRequest = () => {
 
     }
 
@@ -116,7 +134,7 @@ const MealDetails = () => {
                                     <tr>
                                         <th>Request Your Meal</th>
                                         <td>
-                                            <button className="btn btn-primary">Request</button>
+                                            <button onClick={hendleRequest} className="btn btn-primary">...</button>
                                         </td>
                                     </tr>
                                 </tbody>
