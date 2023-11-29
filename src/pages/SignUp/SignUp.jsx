@@ -5,6 +5,7 @@ import { ImCross } from 'react-icons/im';
 import { FormValidationContext } from "../../providers/FormValidationProvider";
 import { updateProfile } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
+import axios from "axios";
 
 const SignUp = () => {
     const [validataion, setValidation] = useContext(FormValidationContext);
@@ -55,8 +56,20 @@ const SignUp = () => {
                     displayName: userName,
                     photoURL: picLink
                 }).then(() => {
-                    toast.success("Sign up Successfull!")
-                    console.log("profile updated successful.")
+                    //create user entry in the database
+                    axios.post('http://localhost:5000/users', {
+                        user_name: userName,
+                        user_email: email,
+                        user_img: picLink,
+                        role: "user",
+                        badge: "bronze", // bronze, platinum, silver, gold
+                        user_reviews: [],
+                        requestedMealsId: []
+                    }).then(res => {
+                        console.log('User entry registered to the server', res);
+                        toast.success("Sign up Successfull!")
+                        console.log("profile updated successful.")
+                    })
                 }).catch(error => console.error("An Error Occured while updatin your name and profile picture.", error))
             })
             .catch(() => {
@@ -125,7 +138,7 @@ const SignUp = () => {
 
                 </div>
             </div>
-            <div><Toaster/></div>
+            <div><Toaster /></div>
         </div>
     );
 };

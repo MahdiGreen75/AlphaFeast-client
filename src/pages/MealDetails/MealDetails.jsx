@@ -1,8 +1,43 @@
-import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { useContext } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
+import useQueryAllMeals from "../../hooks/AllTheGetRequests/useQueryAllMeals";
+import useQueryBreakfast from "../../hooks/AllTheGetRequests/useQueryBreakfast";
+import useQueryLunch from "../../hooks/AllTheGetRequests/useQueryLunch";
+import useQueryDinner from "../../hooks/AllTheGetRequests/useQueryDinner";
 
 const MealDetails = () => {
+    const { user } = useContext(AuthContext);
     const location = useLocation();
-    const {
+    const {details} = useParams();
+    const [allMeals, , refetch1] = useQueryAllMeals();
+    const [breakfast, , refetch2] = useQueryBreakfast();
+    const [dinner, , refetch3] = useQueryDinner();
+    const [lunch, , refetch4] = useQueryLunch();
+
+    const from = location.state.from;
+    let detailsObj;
+
+    if (from === 'allMeals') {
+        detailsObj = allMeals;
+    }
+
+    if (from === 'breakfast') {
+        detailsObj = breakfast;
+    }
+
+    if (from === "dinner") {
+        detailsObj = dinner;
+    }
+
+    if (from === 'lunch') {
+        detailsObj = lunch;
+    }
+
+    const myObj = detailsObj.filter(item=>(item._id === details));
+
+    let {
         _id,
         adminEmail,
         adminName,
@@ -11,8 +46,29 @@ const MealDetails = () => {
         mealReview,
         mealTitle,
         mealPostTime
+    } = myObj[0];
 
-    } = location.state;
+    // console.log(myObj)
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const review = e.target.review.value;
+        //code goes here.
+        const userReview = `${review} ---${user?.displayName}`;
+        axios.patch(`http://localhost:5000/reviews/${_id}`, { review: userReview })
+            .then(res => {
+                if (res.data.modifiedCount === 1) {
+                    refetch1();
+                    refetch2();
+                    refetch3();
+                    refetch4();
+                    e.target.reset();
+                }
+            })
+
+    }
+
     return (
         <div className="w-full">
             <div className="w-full flex flex-col justify-center items-center my-5">
@@ -69,22 +125,24 @@ const MealDetails = () => {
                     </div>
                 </div>
             </div>
-            <div className="w-80 sm:w-[800px] p-2 sm:p-5 border-2 m-5 rounded-xl flex items-center justify-center mx-auto">
-                <>
-                    {mealReview.map((item, index) => <div key={index} className="w-full text-center">
-                        <p className="text-2xl font-bold text-center my-2">Review Of</p>
+            <div className="w-80 sm:w-[800px] mx-auto border-2 rounded-xl px-5">
+                <div className=" flex items-center justify-center w-full flex-col">
+                    <p className="text-2xl font-bold text-center my-2">Review</p>
+                    {mealReview.map((item, index) => <div key={index} className="w-full 
+                    text-center p-2 sm:p-5 border-2 m-5 rounded-xl ">
                         <p className="text-base sm:text-xl font-medium">{item}</p>
                     </div>)}
-                </>
-                <div className="w-full flex justify-start">
-                    <button className="btn btn-sm">Add a review</button>
                 </div>
-            </div>
-            <div className="w-80 sm:w-[800px] p-2 sm:p-5 border-2 m-5 rounded-xl flex items-center justify-center mx-auto">
-                {mealReview.map((item, index) => <div key={index} className="w-full text-center">
-                    <p className="text-2xl font-bold text-center my-2">Review Of</p>
-                    <p className="text-base sm:text-xl font-medium">{item}</p>
-                </div>)}
+                {
+                    user && <div className="">
+                        <div className="w-full flex justify-center mb-5 flex-col border-2 rounded-xl p-5">
+                            <form onSubmit={handleSubmit}>
+                                <button className="btn btn-sm w-full">Add a review</button>
+                                <textarea name={"review"} className="w-full border-2 rounded-md mt-2 outline-none text-sm"></textarea>
+                            </form>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     );

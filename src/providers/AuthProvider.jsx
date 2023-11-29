@@ -2,6 +2,7 @@
 import { createContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import auth from "../services/firebase/firebase.config";
+import axios from "axios";
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
@@ -9,7 +10,7 @@ const AuthProvider = ({ children }) => {
     const [location, setLocation] = useState("");
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    
+
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (stableUser) => {

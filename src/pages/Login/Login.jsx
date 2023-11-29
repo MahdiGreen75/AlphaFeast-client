@@ -7,6 +7,7 @@ import { GoogleAuthProvider } from 'firebase/auth';
 import toast, { Toaster } from 'react-hot-toast';
 import { FormValidationContext } from '../../providers/FormValidationProvider';
 import HeaderTitle from '../../components/HeaderTitle/HeaderTitle';
+import axios from 'axios';
 
 const Login = () => {
     const desiredPath = useLocation();
@@ -18,10 +19,23 @@ const Login = () => {
 
     const handleGoogleSignIn = () => {
         signInWithOther(provider)
-            .then(() => {
-                console.log("Google sign in successful.")
-                toast.success('Login successful!')
-                navigate(`${desiredPath.state.from.pathname}`)
+            .then((result) => {
+                console.log("Google sign in successful.");
+                //create user entry in the database
+                axios.post('http://localhost:5000/users', {
+                    user_name: result.user.displayName,
+                    user_email: result.user.email,
+                    user_img: result.user?.photoURL,
+                    role: "user",
+                    badge: "bronze", // bronze, platinum, silver, gold
+                    user_reviews: [],
+                    requestedMealsId: []
+                }).then(res => {
+                    console.log('User entry registered to the server', res);
+                    toast.success("Sign up Successfull!")
+                    console.log("profile updated successful.")
+                    navigate(`${desiredPath.state.from.pathname}`)
+                })
             })
             .catch(() => {
                 setValidation("Can't sign in with google!")

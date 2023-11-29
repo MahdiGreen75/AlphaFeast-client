@@ -52,7 +52,7 @@ const Navbar = () => {
                     <>
                         <div className="navbar-end">
                             <div className="dropdown dropdown-end">
-                                <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img src={user?.photoURL ? user?.photoURL : "0"} /></div>
+                                <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img className="w-4 rounded-full" src={user?.photoURL ? user?.photoURL : "0"} /></div>
                                 <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                     <li><span className="pointer-events-none font-bold">{user?.displayName}</span></li>
                                     <li><span><NavLink to={"/dashboard"}>Dashboard</NavLink></span></li>
@@ -64,7 +64,7 @@ const Navbar = () => {
                     :
                     <div className="navbar-end opacity-0 cursor-none">
                         <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img src={user?.photoURL ? user?.photoURL : "0"} /></div>
+                            <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img  className="w-4 rounded-full" src={user?.photoURL ? user?.photoURL : "0"} /></div>
                             <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><span className="pointer-events-none font-bold">{user?.displayName}</span></li>
                                 <li><span><NavLink to={"/dashboard"}>Dashboard</NavLink></span></li>

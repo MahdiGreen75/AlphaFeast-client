@@ -23,7 +23,7 @@ const AllMeals = () => {
                                 <span className="font-light text-base">${item.mealPrice}</span>
                             </p>
                             <div>
-                                <Link to={`/meals/${item._id}`} state={{...item}}>
+                                <Link to={`/meals/${item._id}`} state={{from: "allMeals"}}>
                                     <button className="btn btn-primary">Details</button>
                                 </Link>
                             </div>
