@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import useQueryAllMeals from "../../hooks/AllTheGetRequests/useQueryAllMeals";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import LikeComponent from "./LikeComponent";
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const Meals = () => {
@@ -8,6 +10,8 @@ const Meals = () => {
     const [searchType, serSearchType] = useState("price");
     const [searchTerm, serSearchTerm] = useState("");
     const [sortOrder, setSortOrder] = useState('');
+    const { user } = useContext(AuthContext);
+
     if (isPending) {
         return <div className="w-full flex justify-center items-center my-10 min-h-screen">
             <span className="loading loading-spinner loading-lg"></span>
@@ -103,10 +107,24 @@ const Meals = () => {
                                     <span className="text-base font-semibold">Price:</span>
                                     <span className="font-light text-base">${item.mealPrice}</span>
                                 </p>
-                                <div>
-                                    <Link to={`/meals/${item._id}`} state={{ from: "allMeals" }}>
-                                        <button className="btn btn-primary">Details</button>
-                                    </Link>
+                                <div style={
+                                    user ?
+                                        { justifyContent: "space-between" }
+                                        :
+                                        { justifyContent: "center" }
+                                } className="flex items-center w-full">
+                                    <div>
+                                        <Link to={`/meals/${item._id}`} state={{ from: "allMeals" }}>
+                                            <button className="btn btn-primary">Details</button>
+                                        </Link>
+                                    </div>
+                                    {
+                                        user && <>
+                                            <div>
+                                                <LikeComponent id={item._id}></LikeComponent>
+                                            </div>
+                                        </>
+                                    }
                                 </div>
                             </div>
                         </div>)
