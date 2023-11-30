@@ -25,8 +25,6 @@ const Meals = () => {
         serSearchTerm("");
     }
 
-    console.log(allMeals);
-
     return (
         <>
             <div className="flex justify-center items-center p-10 bg-gradient-to-r from-cyan-500 to-blue-500 w-full border-2 rounded-md shadow-xl">
