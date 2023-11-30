@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import useQueryLunch from "../../../hooks/AllTheGetRequests/useQueryLunch";
+import LikeComponent from "../../Meals/LikeComponent";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const Lunch = () => {
     const [lunch, isPending] = useQueryLunch();
+    const {user} = useContext(AuthContext);
 
     if (isPending) {
         return <div className="w-full flex justify-center items-center mt-5 min-h-screen">
@@ -22,11 +26,25 @@ const Lunch = () => {
                                 <span className="text-base font-semibold">Price:</span>
                                 <span className="font-light text-base">${item.mealPrice}</span>
                             </p>
-                            <div>
-                                <Link to={`/meals/${item._id}`}state={{from: "lunch"}}>
-                                    <button className="btn btn-primary">Details</button>
-                                </Link>
-                            </div>
+                            <div style={
+                                    user ?
+                                        { justifyContent: "space-between" }
+                                        :
+                                        { justifyContent: "center" }
+                                } className="flex items-center w-full">
+                                    <div>
+                                        <Link to={`/meals/${item._id}`} state={{ from: "allMeals" }}>
+                                            <button className="btn btn-primary">Details</button>
+                                        </Link>
+                                    </div>
+                                    {
+                                        user && <>
+                                            <div>
+                                                <LikeComponent id={item._id}></LikeComponent>
+                                            </div>
+                                        </>
+                                    }
+                                </div>
                         </div>
                     </div>)
             }

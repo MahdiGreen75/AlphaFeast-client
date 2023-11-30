@@ -14,6 +14,10 @@ import ServeMeals from "../pages/AdminPages/ServeMeals/ServeMeals";
 import AddMeals from "../pages/AdminPages/AddMeals/AddMeals";
 import AllReviews from "../pages/AdminPages/AllReviews/AllReviews";
 import MealDetails from "../pages/MealDetails/MealDetails";
+import UserDashboard from "../layouts/UserDashboard";
+import UserProfile from "../pages/UserPages/UserProfile/UserProfile";
+import RequestedMeals from "../pages/UserPages/RequestedMeals/RequestedMeals";
+import UserReviews from "../pages/UserPages/UserReviews/UserReviews";
 
 
 const router = createBrowserRouter([
@@ -76,6 +80,24 @@ const router = createBrowserRouter([
             {
                 path: 'upcomingMeals',
                 element: <UpcomingMeals></UpcomingMeals>
+            }
+        ]
+    },
+    {
+        path: "userDashboard",
+        element: <UserDashboard></UserDashboard>,
+        children: [
+            {
+                path:"profile",
+                element: <UserProfile></UserProfile>
+            },
+            {
+                path: 'requestedMeals',
+                element: <RequestedMeals></RequestedMeals>
+            },
+            {
+                path: "userReviews",
+                element: <UserReviews></UserReviews>
             }
         ]
     }
