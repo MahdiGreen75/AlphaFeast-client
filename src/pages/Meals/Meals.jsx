@@ -25,7 +25,7 @@ const Meals = () => {
         serSearchTerm("");
     }
 
-    // console.log(allMeals);
+    console.log(allMeals);
 
     return (
         <>
@@ -81,7 +81,22 @@ const Meals = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
                 {
-                    allMeals.map(item =>
+                    allMeals.filter(item => {
+                        if (item.mealTitle.toLowerCase().includes(searchTerm.toLowerCase())) {
+                            return item;
+                        } else if (item.mealType.toLowerCase().includes(searchTerm.toLowerCase())) {
+                            return item;
+                        } else {
+                            return item;
+                        }
+                    }).sort((a, b) => {
+                        if (sortOrder === "asc") {
+                            return +(a.mealPrice) - +(b.mealPrice);
+                        }
+                        if (sortOrder === 'dsc') {
+                            return +(b.mealPrice) - +(a.mealPrice);
+                        }
+                    }).map(item =>
                         <div key={item._id}>
                             <div className="shadow-xl flex flex-col justify-center items-center gap-2 p-5 border m-5 rounded">
                                 <div className="w-full h-48"><img className="w-full h-full border-2 rounded" src={item.imgLink} /></div>
