@@ -57,19 +57,26 @@ const SignUp = () => {
                     photoURL: picLink
                 }).then(() => {
                     //create user entry in the database
-                    axios.post('http://localhost:5000/users', {
-                        user_name: userName,
-                        user_email: email,
-                        user_img: picLink,
-                        role: "user",
-                        badge: "bronze", // bronze, platinum, silver, gold
-                        user_reviews: [],
-                        requestedMealsId: []
-                    }).then(res => {
-                        console.log('User entry registered to the server', res);
-                        toast.success("Sign up Successfull!")
-                        console.log("profile updated successful.")
-                    })
+                    axios.get(`http://localhost:5000/isUser/${result.user.email}`)
+                        .then(res => {
+                            if (res.data.isExists) {
+                                console.log("user already exists.");
+                            } else {
+                                axios.post('http://localhost:5000/users', {
+                                    user_name: userName,
+                                    user_email: email,
+                                    user_img: picLink,
+                                    role: "user",
+                                    badge: "bronze", // bronze, platinum, silver, gold
+                                    user_reviews: [],
+                                    requestedMealsId: []
+                                }).then(res => {
+                                    console.log('User entry registered to the server', res);
+                                    toast.success("Sign up Successfull!")
+                                    console.log("profile updated successful.")
+                                })
+                            }
+                        })
                 }).catch(error => console.error("An Error Occured while updatin your name and profile picture.", error))
             })
             .catch(() => {
