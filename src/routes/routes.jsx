@@ -1,7 +1,7 @@
 import Root from "../layouts/Root";
 import {
     createBrowserRouter
-  } from "react-router-dom";
+} from "react-router-dom";
 import Home from "../pages/Home/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import Login from "../pages/Login/Login";
@@ -18,6 +18,7 @@ import UserDashboard from "../layouts/UserDashboard";
 import UserProfile from "../pages/UserPages/UserProfile/UserProfile";
 import RequestedMeals from "../pages/UserPages/RequestedMeals/RequestedMeals";
 import UserReviews from "../pages/UserPages/UserReviews/UserReviews";
+import PrivateRoute from "./PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -55,10 +56,10 @@ const router = createBrowserRouter([
     },
     {
         path: "adminDashboard",
-        element: <AdminDashBoard></AdminDashBoard>,
+        element: <PrivateRoute><AdminDashBoard></AdminDashBoard></PrivateRoute>,
         children: [
             {
-                path:"profile",
+                path: "profile",
                 element: <AdminProfile></AdminProfile>
             },
             {
@@ -85,10 +86,10 @@ const router = createBrowserRouter([
     },
     {
         path: "userDashboard",
-        element: <UserDashboard></UserDashboard>,
+        element: <PrivateRoute><UserDashboard></UserDashboard></PrivateRoute>,
         children: [
             {
-                path:"profile",
+                path: "profile",
                 element: <UserProfile></UserProfile>
             },
             {

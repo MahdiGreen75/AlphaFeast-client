@@ -6,24 +6,24 @@ import useQueryAllMeals from "../../hooks/AllTheGetRequests/useQueryAllMeals";
 import useQueryBreakfast from "../../hooks/AllTheGetRequests/useQueryBreakfast";
 import useQueryLunch from "../../hooks/AllTheGetRequests/useQueryLunch";
 import useQueryDinner from "../../hooks/AllTheGetRequests/useQueryDinner";
-import { MealReqContext } from "../../providers/mealReqProvider";
-import Swal from "sweetalert2";
+import MealReqButton from "./MealReqButton";
+// import { MealReqContext } from "../../providers/mealReqProvider";
+// import Swal from "sweetalert2";
 
 const MealDetails = () => {
     const { user } = useContext(AuthContext);
     const location = useLocation();
     const { details } = useParams();
-    const [allMeals, , refetch1] = useQueryAllMeals();
-    const [breakfast, , refetch2] = useQueryBreakfast();
-    const [dinner, , refetch3] = useQueryDinner();
-    const [lunch, , refetch4] = useQueryLunch();
-    const [mealReq, setMealReq] = useContext(MealReqContext);
+    const [allMeals, pending1, refetch1] = useQueryAllMeals();
+    const [breakfast, pending2, refetch2] = useQueryBreakfast();
+    const [dinner, pending3, refetch3] = useQueryDinner();
+    const [lunch, pending4, refetch4] = useQueryLunch();
+
     // console.log(mealReq);
-
-
+    
     const from = location.state.from;
     let detailsObj;
-
+    
     if (from === 'allMeals') {
         detailsObj = allMeals;
     }
@@ -39,9 +39,9 @@ const MealDetails = () => {
     if (from === 'lunch') {
         detailsObj = lunch;
     }
-
-    const myObj = detailsObj.filter(item => (item._id === details));
-
+    
+    const myObj = detailsObj.filter(item => item._id === details);
+    
     let {
         _id,
         adminEmail,
@@ -90,35 +90,21 @@ const MealDetails = () => {
             })
     }
 
-    const hendleRequest = () => {
-        const mealReqObj = {
-            mealId: _id,
-            mealTitle: mealTitle,
-            likesCount: mealLikes,
-            states: "Pending",
-            mealPrice: mealPrice,
-            mealType: mealType,
-        }
-        //send the meal request to individual users
-        axios.patch(`http://localhost:5000/mealReq/${user?.email}`,
-            {
-                mealReqObj
-            })
-            .then((res) => {
-                console.log('Meal Requeste to the server', res.data);
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Meal Request Successfull",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                setMealReq("Pending");
-            })
-
-
+    const mealReqObj = {
+        mealId: _id,
+        mealTitle: mealTitle,
+        likesCount: mealLikes,
+        states: "pending",
+        mealPrice: mealPrice,
+        mealType: mealType,
     }
-
+    
+    if (pending1 || pending2 || pending3 || pending4) {
+        return <div className="w-full min-h-screen flex justify-center items-center">
+            <span className="loading loading-spinner loading-lg"></span>
+        </div>
+    }
+    
     return (
         <div className="w-full">
             <div className="w-full flex flex-col justify-center items-center my-5">
@@ -165,28 +151,7 @@ const MealDetails = () => {
                                     {/* row 6 */}
                                     <tr>
                                         <th>Request Your Meal</th>
-                                        <td>
-                                            {
-                                                mealReq === "Request the meal" ?
-                                                    <>
-                                                        <button onClick={hendleRequest} className="btn btn-primary">Request The Meal</button>
-                                                    </>
-                                                    :
-                                                    mealReq === "Pending" ?
-                                                        <>
-                                                            <button onClick={hendleRequest} className="btn btn-primary pointer-events-none opacity-50">Pending</button>
-                                                        </>
-                                                        :
-                                                        mealReq === "Delivered" ?
-                                                            <>
-                                                                <button onClick={hendleRequest} className="btn btn-primary pointer-events-none opacity-50">Delivered</button>
-                                                            </>
-                                                            :
-                                                            <>
-
-                                                            </>
-                                            }
-                                        </td>
+                                        <MealReqButton mealReqObj={mealReqObj}></MealReqButton>
                                     </tr>
                                 </tbody>
                             </table>

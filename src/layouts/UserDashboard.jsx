@@ -7,7 +7,7 @@ const UserDashboard = () => {
             <div className="drawer lg:drawer-open">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col items-center justify-start">
-                    <div className="w-full flex justify-between items-center bg-blue-400">
+                    <div className="w-full flex justify-between items-center shadow-xl bg-blue-500 border-b-1 border-blue-700">
                         <span className="font-semibold text-base lg:hidden">AlphaFeast</span>
                         <label htmlFor="my-drawer-2" className=" drawer-button lg:hidden m-3 font-bold">
                             <GiHamburgerMenu></GiHamburgerMenu>
@@ -28,6 +28,9 @@ const UserDashboard = () => {
                         </li>
                         <li>
                             <NavLink to={"/userDashboard/userReviews"}>Your Reviews</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={"/"}>Home</NavLink>
                         </li>
                     </ul>
 

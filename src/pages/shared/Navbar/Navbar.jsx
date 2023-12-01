@@ -1,11 +1,20 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import Swal from "sweetalert2";
-
+import axios from "axios";
+import { GiRiceCooker } from "react-icons/gi";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const [admin, setAdmin] = useState(false);
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/isAdmin/${user?.email}`)
+            .then(res => {
+                setAdmin(res.data);
+            })
+    })
 
     // console.log(user);
     const handleLogout = () => {
@@ -40,7 +49,7 @@ const Navbar = () => {
                         {navLink}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">AlphaFeast</a>
+                <a className="btn btn-ghost text-xl"><GiRiceCooker className="text-2xl"></GiRiceCooker>AlphaFeast</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -55,7 +64,8 @@ const Navbar = () => {
                                 <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img className="w-4 rounded-full" src={user?.photoURL ? user?.photoURL : "0"} /></div>
                                 <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                     <li><span className="pointer-events-none font-bold">{user?.displayName}</span></li>
-                                    <li><span><NavLink to={"/dashboard"}>Dashboard</NavLink></span></li>
+                                    {/* Admin Or User Dashboard based on admin identification */}
+                                    <li><span><NavLink to={admin === "admin" ? "/adminDashboard" : "/userDashboard"}>{admin === "admin" ?" Dashboard (Admin)" : "DashBoard"}</NavLink></span></li>
                                     <li><span><NavLink onClick={handleLogout}>Logout</NavLink></span></li>
                                 </ul>
                             </div>
@@ -64,10 +74,11 @@ const Navbar = () => {
                     :
                     <div className="navbar-end opacity-0 cursor-none">
                         <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img  className="w-4 rounded-full" src={user?.photoURL ? user?.photoURL : "0"} /></div>
+                            <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img className="w-4 rounded-full" src={user?.photoURL ? user?.photoURL : "0"} /></div>
                             <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><span className="pointer-events-none font-bold">{user?.displayName}</span></li>
-                                <li><span><NavLink to={"/dashboard"}>Dashboard</NavLink></span></li>
+                                {/* Admin Or User Dashboard based on admin identification */}
+                                <li><span><NavLink to={admin === "admin" ? "/adminDashboard" : "/userDashboard"}>{admin === "admin" ?" Dashboard (Admin)" : "DashBoard"}</NavLink></span></li>
                                 <li><span><NavLink onClick={handleLogout}>Logout</NavLink></span></li>
                             </ul>
                         </div>
