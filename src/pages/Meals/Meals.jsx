@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import useQueryAllMeals from "../../hooks/AllTheGetRequests/useQueryAllMeals";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import LikeComponent from "./LikeComponent";
 import { AuthContext } from "../../providers/AuthProvider";
 // import useQueryGetAdminPublishedMeals from "../../hooks/AllTheGetRequests/useQueryGetAdminPublishedMeals/useQueryGetAdminPublishedMeals";
-import axios from "axios";
+// import axios from "axios";
 
 
 const Meals = () => {
@@ -12,16 +12,16 @@ const Meals = () => {
     const [searchType, serSearchType] = useState("price");
     const [searchTerm, serSearchTerm] = useState("");
     const [sortOrder, setSortOrder] = useState('');
-    const [publishedMeals, setPublishedMeals] = useState([]);
+    // const [publishedMeals, setPublishedMeals] = useState([]);
     // const [publishedMeals] = useQueryGetAdminPublishedMeals();
     const { user } = useContext(AuthContext);
 
-    useEffect(() => {
-        axios.get("http://localhost:5000/getMealsPublishedByAdmin")
-            .then(res => {
-                setPublishedMeals(res.data);
-            })
-    }, [])
+    // useEffect(() => {
+    //     axios.get("http://localhost:5000/getMealsPublishedByAdmin")
+    //         .then(res => {
+    //             setPublishedMeals(res.data);
+    //         })
+    // }, [])
 
     if (isPending) {
         return <div className="w-full flex justify-center items-center my-10 min-h-screen">
@@ -34,13 +34,13 @@ const Meals = () => {
         //code goes here...
 
 
-        console.log(searchType, searchTerm, sortOrder);
+        console.log(searchType, searchTerm);
         e.target.reset();
         setSortOrder("");
         serSearchTerm("");
     }
 
-
+    console.log(searchTerm);
     // console.log("published", publishedMeals);
     return (
         <>
@@ -51,7 +51,7 @@ const Meals = () => {
                         <select onChange={(e) => serSearchType(e.target.value)} value={searchType} id="search" className="select select-bordered w-full max-w-xs italic text-xs font-semibold">
                             <option value={"price"} className="italic text-xs font-semibold">Search by price?</option>
                             <option value={"title"} className="italic text-xs font-semibold">Search by title?</option>
-                            <option value={"type"} className="italic text-xs font-semibold">Search by Category? <span className="text-xs font-extralight text-slate-100">( breakfast, lunch, dinner )</span></option>
+                            {/* <option value={"type"} className="italic text-xs font-semibold">Search by Category? <span className="text-xs font-extralight text-slate-100">( breakfast, lunch, dinner )</span></option> */}
                         </select>
                     </label>
                     {
@@ -90,28 +90,31 @@ const Meals = () => {
                     }
 
                     <div className="w-full flex justify-center items-center">
-                        <input type="submit" value="Search" className="text-white font-bold text-xs bg-purple-500 hover:bg-purple-700 active:bg-purple-800 duration-300 px-2 py-1 rounded-md shadow-xl mt-2" />
+                        <></>
                     </div>
                 </form>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
                 {
-                    [...allMeals, ...publishedMeals].filter(item => {
-                        if (item.mealTitle?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                            return item;
-                        } else if (item.mealType?.toLowerCase().includes(searchTerm.toLowerCase())) {
-                            return item;
-                        } else {
-                            return item;
-                        }
-                    }).sort((a, b) => {
+                    allMeals.sort((a, b) => {
                         if (sortOrder === "asc") {
                             return +(a.mealPrice) - +(b.mealPrice);
                         }
                         if (sortOrder === 'dsc') {
                             return +(b.mealPrice) - +(a.mealPrice);
                         }
-                    }).map(item =>
+                    }).filter(item => {
+                        const trimmedMealTitle = item.mealTitle.trim();
+                        const trimmedSearchTerm = searchTerm.trim();
+
+                        if (trimmedSearchTerm) {
+                            // Check if both trimmedMealTitle and trimmedSearchTerm are not empty
+                            return (trimmedMealTitle !== "" && trimmedSearchTerm !== "" && trimmedMealTitle.toLowerCase().includes(trimmedSearchTerm.toLowerCase()));
+                        } else {
+                            return item;
+                        }
+                    }
+                    ).map(item =>
                         <div key={item._id}>
                             <div className="shadow-xl flex flex-col justify-center items-center gap-2 p-5 border m-5 rounded">
                                 <div className="w-full h-48"><img className="w-full h-full border-2 rounded" src={item.imgLink} /></div>

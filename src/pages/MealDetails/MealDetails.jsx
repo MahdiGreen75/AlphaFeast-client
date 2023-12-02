@@ -20,9 +20,18 @@ const MealDetails = () => {
     const [dinner, pending3, refetch3] = useQueryDinner();
     const [lunch, pending4, refetch4] = useQueryLunch();
     const [upcomingMeals, pending5, refetch5] = useQueryUpcomingMeals();
+    // const [publishedMeals, setPublishedMeals] = useState([]);
+
+
+    // useEffect(() => {
+    //     axios.get("http://localhost:5000/getMealsPublishedByAdmin")
+    //         .then(res => {
+    //             setPublishedMeals(res.data);
+    //         })
+    // }, [])
 
     // console.log(mealReq);
-    
+
     const from = location.state.from;
     console.log(from);
     let detailsObj;
@@ -32,7 +41,7 @@ const MealDetails = () => {
             <span className="loading loading-spinner loading-lg"></span>
         </div>
     }
-    
+
     if (from === 'allMeals') {
         detailsObj = allMeals;
     }
@@ -52,9 +61,10 @@ const MealDetails = () => {
     if (from === 'lunch') {
         detailsObj = lunch;
     }
-    
-    const myObj = detailsObj.filter(item => item._id === details);
-    
+
+
+    const myObj = detailsObj.filter(item => (item._id === details));
+
     let {
         _id,
         adminEmail,
@@ -113,8 +123,8 @@ const MealDetails = () => {
         mealType: mealType,
     }
 
-   
-    
+
+
     return (
         <div className="w-full">
             <div className="w-full flex flex-col justify-center items-center my-5">
@@ -194,22 +204,3 @@ const MealDetails = () => {
 
 export default MealDetails;
 
-/**
- * 
- * 
- * "_id": "6565d90426095db25ad26d2b",
-    "imgLink": "https://i.ibb.co/nLMxjMv/img-1.jpg",
-    "adminEmail": "qarimahdi217gmail.com",
-    "adminName": "Mahdi Aiden",
-    "mealDescription": "It is egg curry which is made with awesome mixture of spices. consider taking this meal. you will love it.",
-    "mealPrice": "50",
-    "mealLikes": "0",
-    "mealReview": [
-      "Egg curry is awesome. it was so delicious that i can't forget it till now!"
-    ],
-    "mealTitle": "Egg Curry",
-    "mealType": "breakfast",
-    "upcomingOrAddMeals": "addToMeals",
-    "mealRequest": false,
-    "mealPostTime": "2023-11-28T12:11:48.036Z"
- */
