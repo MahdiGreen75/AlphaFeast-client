@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { MealReqContext } from "../../../providers/mealReqProvider";
 // import useMealReqButton from "../../../hooks/useMealReqButton/useMealReqButton";
-import ServeMealsButton from "./ServeMealsButton";
+// import ServeMealsButton from "./ServeMealsButton";
 import useMealReqButton from "../../../hooks/useMealReqButton/useMealReqButton";
 import Swal from "sweetalert2";
 // import useMealReqButton from "../../../hooks/useMealReqButton/useMealReqButton";
@@ -79,7 +79,6 @@ const ServeMeals = () => {
                                                 <th>Order</th>
                                                 <th>Meal Title</th>
                                                 <th>Meal Type</th>
-                                                <th>Status</th>
                                                 <th>Serve</th>
                                             </tr>
                                         </thead>
@@ -90,9 +89,9 @@ const ServeMeals = () => {
                                                     <th>{index + 1}</th>
                                                     <td>{item.mealTitle}</td>
                                                     <td>{item.mealType}</td>
-                                                    <td>
+                                                    {/* <td>
                                                         <ServeMealsButton id={item.mealId}></ServeMealsButton>
-                                                    </td>
+                                                    </td> */}
                                                     <td>
                                                         <button onClick={() => handleServeMealRequest(item.mealId, item1.user_email)} className="text-white font-semibold bg-blue-500 hover:bg-blue-700 active:bg-blue-800 px-2 py-1 rounded-md duration-300">Serve</button>
                                                     </td>

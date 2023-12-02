@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import useQueryAllMeals from "../../hooks/AllTheGetRequests/useQueryAllMeals";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LikeComponent from "./LikeComponent";
 import { AuthContext } from "../../providers/AuthProvider";
+// import useQueryGetAdminPublishedMeals from "../../hooks/AllTheGetRequests/useQueryGetAdminPublishedMeals/useQueryGetAdminPublishedMeals";
+import axios from "axios";
 
 
 const Meals = () => {
@@ -10,7 +12,16 @@ const Meals = () => {
     const [searchType, serSearchType] = useState("price");
     const [searchTerm, serSearchTerm] = useState("");
     const [sortOrder, setSortOrder] = useState('');
+    const [publishedMeals, setPublishedMeals] = useState([]);
+    // const [publishedMeals] = useQueryGetAdminPublishedMeals();
     const { user } = useContext(AuthContext);
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/getMealsPublishedByAdmin")
+            .then(res => {
+                setPublishedMeals(res.data);
+            })
+    }, [])
 
     if (isPending) {
         return <div className="w-full flex justify-center items-center my-10 min-h-screen">
@@ -29,6 +40,8 @@ const Meals = () => {
         serSearchTerm("");
     }
 
+
+    // console.log("published", publishedMeals);
     return (
         <>
             <div className="flex justify-center items-center p-10 bg-gradient-to-r from-cyan-500 to-blue-500 w-full border-2 rounded-md shadow-xl">
@@ -83,10 +96,10 @@ const Meals = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
                 {
-                    allMeals.filter(item => {
-                        if (item.mealTitle.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    [...allMeals, ...publishedMeals].filter(item => {
+                        if (item.mealTitle?.toLowerCase().includes(searchTerm.toLowerCase())) {
                             return item;
-                        } else if (item.mealType.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        } else if (item.mealType?.toLowerCase().includes(searchTerm.toLowerCase())) {
                             return item;
                         } else {
                             return item;

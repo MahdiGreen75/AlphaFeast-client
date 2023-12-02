@@ -19,6 +19,7 @@ import UserProfile from "../pages/UserPages/UserProfile/UserProfile";
 import RequestedMeals from "../pages/UserPages/RequestedMeals/RequestedMeals";
 import UserReviews from "../pages/UserPages/UserReviews/UserReviews";
 import PrivateRoute from "./PrivateRoute";
+import UpcomingMealsForUsers from "../pages/Home/UpcomingMealsForUsers/UpcomingMealsForUsers";
 
 
 const router = createBrowserRouter([
@@ -48,8 +49,8 @@ const router = createBrowserRouter([
                 element: <MealDetails></MealDetails>
             },
             {
-                path: "/upcomingMeals",
-                element: <UpcomingMeals></UpcomingMeals>
+                path: "/upcomingMealsForUsers",
+                element: <UpcomingMealsForUsers></UpcomingMealsForUsers>
             }
         ]
 

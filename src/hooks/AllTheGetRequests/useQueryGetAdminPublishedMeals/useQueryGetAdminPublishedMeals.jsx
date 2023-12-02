@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const useQueryUpcomingMeals = () => {
+const useQueryGetAdminPublishedMeals = () => {
     const { data: arr = [], refetch, isPending } = useQuery({
-        queryKey: ['upcomingMeals'],
+        queryKey: ['allMeals'],
         queryFn: async () => {
-            const res = await axios.get('http://localhost:5000/upcomingMeals');
+            const res = await axios.get('http://localhost:5000/getMealsPublishedByAdmin');
             return res.data;
         }
     })
@@ -13,4 +13,4 @@ const useQueryUpcomingMeals = () => {
     return [arr, isPending, refetch];
 };
 
-export default useQueryUpcomingMeals;
+export default useQueryGetAdminPublishedMeals;

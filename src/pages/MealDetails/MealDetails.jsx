@@ -7,6 +7,7 @@ import useQueryBreakfast from "../../hooks/AllTheGetRequests/useQueryBreakfast";
 import useQueryLunch from "../../hooks/AllTheGetRequests/useQueryLunch";
 import useQueryDinner from "../../hooks/AllTheGetRequests/useQueryDinner";
 import MealReqButton from "./MealReqButton";
+import useQueryUpcomingMeals from "../../hooks/AllTheGetRequests/useQueryUpcomingMeals";
 // import { MealReqContext } from "../../providers/mealReqProvider";
 // import Swal from "sweetalert2";
 
@@ -18,14 +19,26 @@ const MealDetails = () => {
     const [breakfast, pending2, refetch2] = useQueryBreakfast();
     const [dinner, pending3, refetch3] = useQueryDinner();
     const [lunch, pending4, refetch4] = useQueryLunch();
+    const [upcomingMeals, pending5, refetch5] = useQueryUpcomingMeals();
 
     // console.log(mealReq);
     
     const from = location.state.from;
+    console.log(from);
     let detailsObj;
+
+    if (pending1 || pending2 || pending3 || pending4 || pending5) {
+        return <div className="w-full min-h-screen flex justify-center items-center">
+            <span className="loading loading-spinner loading-lg"></span>
+        </div>
+    }
     
     if (from === 'allMeals') {
         detailsObj = allMeals;
+    }
+
+    if (from === 'upcomingMeals') {
+        detailsObj = upcomingMeals;
     }
 
     if (from === 'breakfast') {
@@ -77,6 +90,7 @@ const MealDetails = () => {
                     refetch2();
                     refetch3();
                     refetch4();
+                    refetch5();
                     e.target.reset();
                     //send the review to the user.
                     axios.patch(`http://localhost:5000/userReviews/${user?.email}`,
@@ -98,12 +112,8 @@ const MealDetails = () => {
         mealPrice: mealPrice,
         mealType: mealType,
     }
-    
-    if (pending1 || pending2 || pending3 || pending4) {
-        return <div className="w-full min-h-screen flex justify-center items-center">
-            <span className="loading loading-spinner loading-lg"></span>
-        </div>
-    }
+
+   
     
     return (
         <div className="w-full">

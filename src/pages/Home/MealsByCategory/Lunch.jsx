@@ -33,7 +33,7 @@ const Lunch = () => {
                                         { justifyContent: "center" }
                                 } className="flex items-center w-full">
                                     <div>
-                                        <Link to={`/meals/${item._id}`} state={{ from: "allMeals" }}>
+                                        <Link to={`/meals/${item._id}`} state={{ from: "lunch" }}>
                                             <button className="btn btn-primary">Details</button>
                                         </Link>
                                     </div>
