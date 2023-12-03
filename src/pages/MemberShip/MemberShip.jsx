@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import HeaderTitle from "../../components/HeaderTitle/HeaderTitle";
 
 
@@ -11,7 +12,9 @@ const MemberShip = () => {
                         <h2 className="text-center font-bold text-2xl">Silver</h2>
                         <p className="text-center">Choose a silver membeship.</p>
                         <div className="card-actions justify-center">
-                            <button className="btn btn-primary">Purchase</button>
+                            <Link to={`/checkOutPage/silver`}>
+                                <button className="btn btn-primary">Purchase</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -20,7 +23,9 @@ const MemberShip = () => {
                         <h2 className="text-center font-bold text-2xl">Gold</h2>
                         <p className="text-center">Choose a Gold membeship.</p>
                         <div className="card-actions justify-center">
-                            <button className="btn btn-primary">Purchase</button>
+                            <Link to={`/checkOutPage/gold`}>
+                                <button className="btn btn-primary">Purchase</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -29,7 +34,9 @@ const MemberShip = () => {
                         <h2 className="text-center font-bold text-2xl">Platinum</h2>
                         <p className="text-center">Choose a Platinum membeship.</p>
                         <div className="card-actions justify-center">
-                            <button className="btn btn-primary">Purchase</button>
+                            <Link to={`/checkOutPage/platinum`}>
+                                <button className="btn btn-primary">Purchase</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
