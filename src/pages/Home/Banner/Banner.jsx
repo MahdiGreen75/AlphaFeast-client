@@ -1,8 +1,8 @@
-
+import banner from "../../../assets/banner.jpg"
 
 const Banner = () => {
     return (
-        <div className="hero min-h-screen" style={{ backgroundImage: 'url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)' }}>
+        <div className="border border-slate-900 hero min-h-screen mb-5 bg-gradient-to-r from-cyan-500 to-blue-500" style={{ backgroundImage: `url(${banner})` }}>
             <div className="hero-overlay bg-opacity-60"></div>
             <div className="hero-content text-center text-neutral-content">
                 <div className="max-w-md">

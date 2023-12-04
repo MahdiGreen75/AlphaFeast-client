@@ -21,7 +21,7 @@ const Faqs = () => {
                                     </summary>
 
                                     <span className="px-4 py-2 border block rounded-md bg-white">
-                                    Posting a job on TechJobBD is a breeze! Simply log in to your account, click on the "Post a Job" button, fill in the necessary details about the position, and hit submit. Your job will then be reviewed by our team and, once approved, will be live on the site for potential candidates to discover.
+                                    Ordering food is a breeze! Simply log in to your account, click on the "Post a Job" button, fill in the necessary details about the position, and hit submit. Your job will then be reviewed by our team and, once approved, will be live on the site for potential candidates to discover.
                                     </span>
                                 </details>
                                 <details className="mb-4">
@@ -50,12 +50,12 @@ const Faqs = () => {
                                     </summary>
 
                                     <span className="px-4 py-2 border block rounded-md bg-white">
-                                    Absolutely! You can edit your job posting at any time by logging into your account and accessing the "My Jobs" section. From there, you can make changes to the job details or remove the posting altogether if the position has been filled or is no longer available.
+                                    Absolutely! You can edit your job posting at any time by logging into your account and accessing the "My Carts" section. From there, you can make changes to the job details or remove the posting altogether if the position has been filled or is no longer available.
                                     </span>
                                 </details>
                                 <details className="mb-4">
                                     <summary className="font-semibold  bg-white drop-shadow-xl border rounded-md py-2 px-4">
-                                    How can I attract more qualified candidates to my job listing?
+                                    How can I order a food on my need?
                                     </summary>
 
                                     <span className="px-4 py-2 border block rounded-md bg-white">
@@ -64,7 +64,7 @@ const Faqs = () => {
                                 </details>
                                 <details className="mb-4">
                                     <summary className="font-semibold  bg-white drop-shadow-xl border rounded-md py-2 px-4">
-                                    I'm having issues with my job posting. Where can I get help?
+                                    I'm having issues with my food ordering. Where can I get help?
                                     </summary>
 
                                     <span className="px-4 py-2 border block rounded-md bg-white">

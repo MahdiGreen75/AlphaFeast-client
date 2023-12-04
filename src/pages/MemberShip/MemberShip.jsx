@@ -4,7 +4,7 @@ import HeaderTitle from "../../components/HeaderTitle/HeaderTitle";
 
 const MemberShip = () => {
     return (
-        <>
+        <div className="border-2 p-5 mt-8 rounded-md shadow-xl">
             <HeaderTitle header={"Join Our Membership"} headerPara={"Choose a plan that suits you the best"}></HeaderTitle>
             <div className="flex flex-col md:flex-row gap-5 justify-center items-center my-10">
                 <div className="card w-auto md:w-72 lg:w-96 glass bg-slate-500">
@@ -41,7 +41,7 @@ const MemberShip = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

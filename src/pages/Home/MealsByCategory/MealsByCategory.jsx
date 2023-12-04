@@ -17,16 +17,16 @@ const MealsByCategory = () => {
                     <Tab>All meals</Tab>
                 </TabList>
 
-                <TabPanel>
-                    <Breakfast/>
+                <TabPanel className='border shadow-xl'>
+                    <Breakfast />
                 </TabPanel>
-                <TabPanel>
-                    <Lunch/>
+                <TabPanel className='border shadow-xl'>
+                    <Lunch />
                 </TabPanel>
-                <TabPanel>
-                   <Dinner></Dinner>
+                <TabPanel className='border shadow-xl'>
+                    <Dinner></Dinner>
                 </TabPanel>
-                <TabPanel>
+                <TabPanel className='border shadow-xl'>
                     <AllMeals></AllMeals>
                 </TabPanel>
             </Tabs>

@@ -7,10 +7,10 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProvider";
 import useMealReqButton from "../../hooks/useMealReqButton/useMealReqButton";
 
-const MealReqButton = ({ mealReqObj}) => {
+const MealReqButton = ({ mealReqObj }) => {
     // console.log(mealReqObj.mealId)
-    const [data] = useMealReqButton(mealReqObj.mealId);
-    const {user} = useContext(AuthContext)
+    const [data, isPending] = useMealReqButton(mealReqObj.mealId);
+    const { user } = useContext(AuthContext)
 
     //this is final
     // console.log(data[0]?.states)
@@ -32,16 +32,22 @@ const MealReqButton = ({ mealReqObj}) => {
             })
     }
 
+    if (isPending) {
+        return <div className="w-full flex items-center justify-center">
+            <span className="loading loading-spinner loading-lg"></span>
+        </div>
+    }
+
     return (
         <td>
             {
                 (data[0]?.states) === undefined ? <>
                     <button onClick={hendleRequest} className="btn btn-sm btn-success">Request The Meal</button>
                 </>
-                :
-                <>
-                    <button className="btn btn-sm pointer-events-none opacity-60 btn-warning">{data[0]?.states}</button>
-                </>
+                    :
+                    <>
+                        <button className="btn btn-sm pointer-events-none opacity-60 btn-warning">{data[0]?.states}</button>
+                    </>
             }
         </td>
     );

@@ -15,8 +15,8 @@ const Login = () => {
     const [validataion, setValidation] = useContext(FormValidationContext);
     const { logIn, signInWithOther } = useContext(AuthContext);
     const provider = new GoogleAuthProvider();
-    // console.log(desiredPath.state.from.pathname);
-
+    const whereToGo = (desiredPath?.state?.from?.pathname) ? (desiredPath?.state?.from?.pathname) : "/";
+    console.log(whereToGo);
     const handleGoogleSignIn = () => {
         signInWithOther(provider)
             .then((result) => {
@@ -39,7 +39,7 @@ const Login = () => {
                                 console.log('User entry registered to the server', res);
                                 toast.success("Sign up Successfull!")
                                 console.log("profile updated successful.")
-                                // navigate(`${desiredPath.state.from.pathname}`)
+                                // navigate('/');
                             })
                         }
                     })
@@ -104,7 +104,7 @@ const Login = () => {
                                 console.log('User entry registered to the server', res);
                                 toast.success("Sign up Successfull!")
                                 console.log("profile updated successful.")
-                                // navigate(`${desiredPath.state?.from.pathname}`)
+                                // navigate(whereToGo);
                             })
                         }
                     })

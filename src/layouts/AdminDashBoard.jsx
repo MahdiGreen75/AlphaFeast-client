@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu, GiRiceCooker } from "react-icons/gi";
 
 const AdminDashBoard = () => {
     return (
@@ -8,7 +8,7 @@ const AdminDashBoard = () => {
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col items-center justify-start">
                     <div className="w-full flex justify-between items-center shadow-xl bg-blue-500 border-b-1 border-blue-700">
-                        <span className="font-semibold text-base lg:hidden">AlphaFeast</span>
+                        <span className="font-semibold text-base lg:hidden px-2 flex items-center gap-1 justify-center"><GiRiceCooker className="text-2xl"></GiRiceCooker>AlphaFeast</span>
                         <label htmlFor="my-drawer-2" className=" drawer-button lg:hidden m-3 font-bold">
                             <GiHamburgerMenu></GiHamburgerMenu>
                         </label>
