@@ -21,6 +21,8 @@ import UserReviews from "../pages/UserPages/UserReviews/UserReviews";
 import PrivateRoute from "./PrivateRoute";
 import UpcomingMealsForUsers from "../pages/Home/UpcomingMealsForUsers/UpcomingMealsForUsers";
 import CheckOut from "../pages/CheckOut/CheckOut";
+import UserPayMentHistory from "../pages/UserPages/UserPayMentHistory/UserPayMentHistory";
+import PaymentHistoryAdmin from "../pages/AdminPages/PaymentHistoryAdmin/PaymentHistoryAdmin";
 
 
 const router = createBrowserRouter([
@@ -87,6 +89,10 @@ const router = createBrowserRouter([
             {
                 path: 'upcomingMeals',
                 element: <UpcomingMeals></UpcomingMeals>
+            },
+            {
+                path: 'allUsersPayment',
+                element: <PaymentHistoryAdmin></PaymentHistoryAdmin>
             }
         ]
     },
@@ -105,6 +111,10 @@ const router = createBrowserRouter([
             {
                 path: "userReviews",
                 element: <UserReviews></UserReviews>
+            },
+            {
+                path: "userPaymentHistory",
+                element: <UserPayMentHistory></UserPayMentHistory>
             }
         ]
     }

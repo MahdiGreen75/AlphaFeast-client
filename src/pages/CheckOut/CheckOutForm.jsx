@@ -3,6 +3,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 
 const CheckOutForm = ({ plan }) => {
@@ -84,6 +85,29 @@ const CheckOutForm = ({ plan }) => {
             if (paymentIntent.status === "succeeded") {
                 console.log("Transaction Id", paymentIntent.id);
                 setTransactionId(paymentIntent.id);
+
+                //now save the payment in the database
+                const payment = {
+                    email: user?.email,
+                    price: price,
+                    date: new Date(), //utc date convert, convert to moment js
+                    transactionId: paymentIntent.id,
+                    plan: plan
+                }
+
+                //send payment data to database
+                const res = await axios.post("http://localhost:5000/payments", payment);
+                console.log("Payment Confirmation Successfull", res.data.insertedId);
+                if(res.data?.insertedId) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: `Congratulations, $${price} payment succesfull. Thanks for joining ${plan} membership.`,
+                        showConfirmButton: false,
+                        timer: 3000
+                      });
+                }
+
             }
         }
 
@@ -112,7 +136,7 @@ const CheckOutForm = ({ plan }) => {
             </button>
             <p className="text-red-600 text-xs font-bold my-5">{error}</p>
             {transactionId && <p className="text-slate-900 text-xs font-bold my-5">
-                <span>Transaction Id: </span><span className="font-normal">{transactionId} </span>   
+                <span>Transaction Id: </span><span className="font-normal">{transactionId} </span>
             </p>}
         </form>
     );

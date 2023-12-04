@@ -30,6 +30,9 @@ const UserDashboard = () => {
                             <NavLink to={"/userDashboard/userReviews"}>Your Reviews</NavLink>
                         </li>
                         <li>
+                            <NavLink to={"/userDashboard/userPaymentHistory"}>Payment History</NavLink>
+                        </li>
+                        <li>
                             <NavLink to={"/"}>Home</NavLink>
                         </li>
                     </ul>

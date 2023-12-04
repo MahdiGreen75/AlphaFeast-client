@@ -36,6 +36,9 @@ const AdminDashBoard = () => {
                             <NavLink to={"/adminDashboard/upcomingMeals"}>Upcoming Meals</NavLink>
                         </li>
                         <li>
+                            <NavLink to={"/adminDashboard/allUsersPayment"}>Payment History</NavLink>
+                        </li>
+                        <li>
                             <NavLink to={"/"}>Home</NavLink>
                         </li>
                     </ul>

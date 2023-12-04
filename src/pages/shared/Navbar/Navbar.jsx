@@ -36,6 +36,7 @@ const Navbar = () => {
         <li><span><NavLink to={'/meals'}>Meals</NavLink></span></li>
         <li><span><NavLink to={"/upcomingMealsForUsers"}>Upcoming Meals</NavLink></span></li>
         <li><span><NavLink to={'/login'}>Join Us</NavLink></span></li>
+        {/* <li><span><NavLink to={'/paymentHistory'}>Payment History</NavLink></span></li> */}
     </>
 
     return (
@@ -61,7 +62,7 @@ const Navbar = () => {
                     <>
                         <div className="navbar-end">
                             <div className="dropdown dropdown-end">
-                                <div tabIndex={0} role="button" className="btn m-1 rounded-full bg-slate-500"><img className="w-4 rounded-full" src={user?.photoURL ? user?.photoURL : "0"} /></div>
+                                <div tabIndex={0} role="button" className="p-1 m-1 rounded-full bg-blue-500 shadow-xl"><img className="w-10 h-10 object-cover rounded-full" src={user?.photoURL ? user?.photoURL : "0"} /></div>
                                 <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                     <li><span className="pointer-events-none font-bold">{user?.displayName}</span></li>
                                     {/* Admin Or User Dashboard based on admin identification */}
