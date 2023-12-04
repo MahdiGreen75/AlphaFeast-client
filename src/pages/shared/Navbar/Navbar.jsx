@@ -4,6 +4,8 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { GiRiceCooker } from "react-icons/gi";
+import './style.css'
+
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -32,11 +34,10 @@ const Navbar = () => {
     }
 
     const navLink = <>
-        <li><span><NavLink to="/">Home</NavLink></span></li>
-        <li><span><NavLink to={'/meals'}>Meals</NavLink></span></li>
-        <li><span><NavLink to={"/upcomingMealsForUsers"}>Upcoming Meals</NavLink></span></li>
-        <li><span><NavLink to={'/login'}>Join Us</NavLink></span></li>
-        {/* <li><span><NavLink to={'/paymentHistory'}>Payment History</NavLink></span></li> */}
+        <li><span><NavLink activeClassName="active" to="/">Home</NavLink></span></li>
+        <li><span><NavLink activeClassName="active" to={'/meals'}>Meals</NavLink></span></li>
+        <li><span><NavLink activeClassName="active" to={"/upcomingMealsForUsers"}>Upcoming Meals</NavLink></span></li>
+        <li><span><NavLink activeClassName="active" to={'/login'}>Join Us</NavLink></span></li>
     </>
 
     return (
