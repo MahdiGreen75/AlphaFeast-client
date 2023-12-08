@@ -33,7 +33,8 @@ The project leverages the power of Tailwind CSS and Daisy UI for visually appeal
 - **Stripe React:** A library for integrating Stripe with React applications.
 
 ## Further Query
-To know more mail me at: qarimahdi217@gmail.com
-Site Live Link: https://alphafeast-3f69e.web.app/
-Site Login Admin Dummy Email: jack123@company.com
-Site Login Admin Dummy Password: 123456sS@
+To know more mail me at: qarimahdi217@gmail.com  <br/>
+Site Live Link: https://alphafeast-3f69e.web.app/   <br/>
+Site Login Admin Dummy Email: jack123@company.com   <br/>
+Site Login Admin Dummy Password: 123456sS@   <br/>
+[Click here to go to server side code repo](https://github.com/MahdiGreen75/AlphaFeast-server)
