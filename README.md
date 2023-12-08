@@ -34,3 +34,6 @@ The project leverages the power of Tailwind CSS and Daisy UI for visually appeal
 
 ## Further Query
 To know more mail me at: qarimahdi217@gmail.com
+Site Live Link: https://alphafeast-3f69e.web.app/
+Site Login Admin Dummy Email: jack123@company.com
+Site Login Admin Dummy Password: 123456sS@
